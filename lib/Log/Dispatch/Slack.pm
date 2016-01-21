@@ -5,7 +5,7 @@ package Log::Dispatch::Slack;
 use strict;
 use warnings;
  
-our $VERSION = '0.0001';
+our $VERSION = '0.0004';
 
 use WebService::Slack::WebApi;
 use Log::Dispatch::Output;
@@ -40,15 +40,17 @@ sub _basic_init {
  
     my %p = validate(
         @_, {
-            token   => { type => SCALAR },
-            channel => { type => SCALAR },
-            user    => { type => SCALAR, optional => 1 }
+            token       => { type => SCALAR },
+            channel     => { type => SCALAR },
+            icon        => { type => SCALAR, optional => 1 },
+            username    => { type => SCALAR, optional => 1 },
         }
     );
  
     $self->{channel}    = $p{channel};
     $self->{token}      = $p{token};
     $self->{username}   = $p{username};
+    $self->{icon}       = $p{icon};
 }
 
 sub _make_handle {
@@ -64,19 +66,24 @@ sub log_message {
     my %p    = @_;
     
     my %post_params = (
-        channel => $self->{channel},
         text    => $p{message},
+        channel => $p{channel}  || $self->{channel},
     );
-    if( $self->{username} ){
+    if( $p{icon} ){
+        $post_params{icon_url} = $p{icon};
+    }elsif( $self->{icon} ){
+        $post_params{icon_url} = $self->{icon};
+    }
+    
+    if( $p{username} ){
+        $post_params{username} = $p{username};
+    }elsif( $self->{username} ){
         $post_params{username} = $self->{username};
     }else{
         $post_params{as_user} = 1;
     }
     
-    use YAML;
-    print Dump( \%post_params );
     my $response = $self->{client}->chat->post_message( %post_params );
-    print Dump( $response );
     
     if( ! $response->{ok} ){
         die( sprintf( "Failed to send message to channel (%s): %s", $self->{channel}, $response->{error} ) );
