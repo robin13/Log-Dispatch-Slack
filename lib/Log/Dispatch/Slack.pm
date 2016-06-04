@@ -7,6 +7,7 @@ use warnings;
  
 our $VERSION = '0.0004';
 
+use Encode qw(encode_utf8);
 use WebService::Slack::WebApi;
 use Log::Dispatch::Output;
 use Try::Tiny;
@@ -44,6 +45,7 @@ sub _basic_init {
             channel     => { type => SCALAR },
             icon        => { type => SCALAR, optional => 1 },
             username    => { type => SCALAR, optional => 1 },
+            utf8        => { type => BOOLEAN, optional => 1 },
         }
     );
  
@@ -51,6 +53,7 @@ sub _basic_init {
     $self->{token}      = $p{token};
     $self->{username}   = $p{username};
     $self->{icon}       = $p{icon};
+    $self->{utf8}       = $p{utf8};
 }
 
 sub _make_handle {
@@ -66,7 +69,7 @@ sub log_message {
     my %p    = @_;
     
     my %post_params = (
-        text    => $p{message},
+        text    => $self->{utf8} ? encode_utf8($p{message}) : $p{message},
         channel => $p{channel}  || $self->{channel},
     );
     if( $p{icon} ){
