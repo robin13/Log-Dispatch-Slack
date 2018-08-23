@@ -129,6 +129,8 @@ Send log messages to Slack
   log4perl.appender.hipchat.channel=channel-to-talk-to
   log4perl.appender.hipchat.die_on_error=1
 
+  log4perl.appender.hipchat.username=set-to-something-if-using-app-token
+
 =head1 COPYRIGHT
 
 Copyright 2016, Robin Clarke
@@ -139,5 +141,5 @@ Robin Clarke <robin@robinclarke.net>
 
 =head1 CONTRIBUTORS
 
-Bartlomiej Fulanty <starlight@cpan.org>
+Bartlomiej Fulanty <starlight@cpan.org>, Hurra.com
 

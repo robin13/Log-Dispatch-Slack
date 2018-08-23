@@ -24,7 +24,7 @@ $mock->mock('_make_handle', sub {
             if ($DIE_DIE_DIE) {
                 return {
                     'ok' => 0,
-                    'error' => 255,
+                    'error' => 'some_slack_error',
                 }
             }
 
@@ -48,7 +48,7 @@ $DIE_DIE_DIE = 1;
 
 throws_ok {
     $slack->log_message(message=>"lalala");
-} qr/\QFailed to send message to channel (#dr-strange): 255\E/, "Now it dies as it's supposed to";
+} qr/\QFailed to send message to channel (#dr-strange): some_slack_error\E/, "Now it dies as it is supposed to";
 
 lives_ok {
     my $slack = Log::Dispatch::Slack->new( token => 'aaaa', channel => '#dr-strange', die_on_error => 0, min_level => 1);
