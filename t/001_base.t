@@ -10,6 +10,9 @@ use Test::Exception;
 
 my $DIE_DIE_DIE = 0;
 
+
+use_ok 'Log::Dispatch::Slack';
+
 my $mock = Test::MockModule->new('Log::Dispatch::Slack');
 $mock->mock('_make_handle', sub {
     my $self = shift;
@@ -36,8 +39,6 @@ $mock->mock('_make_handle', sub {
     $self->{client} = $swapi;
     return;
 });
-
-use_ok 'Log::Dispatch::Slack';
 
 my $slack = Log::Dispatch::Slack->new( token => 'aaaa', channel => '#dr-strange', min_level => 1);
 lives_ok {
