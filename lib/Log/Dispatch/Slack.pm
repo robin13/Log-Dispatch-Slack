@@ -5,7 +5,7 @@ package Log::Dispatch::Slack;
 use strict;
 use warnings;
 
-our $VERSION = '0.0005';
+our $VERSION = '0.0006';
 
 use Carp;
 use Encode qw(encode_utf8);
@@ -46,8 +46,8 @@ sub _basic_init {
             channel         => { type => SCALAR },
             icon            => { type => SCALAR, optional => 1 },
             username        => { type => SCALAR, optional => 1 },
-            die_on_error    => { type => BOOLEAN, optional => 1, default => 1 }
-            utf8        => { type => BOOLEAN, optional => 1 },
+            die_on_error    => { type => BOOLEAN, optional => 1, default => 1 },
+            utf8            => { type => BOOLEAN, optional => 1 },
         }
     );
 
