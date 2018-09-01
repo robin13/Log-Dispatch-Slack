@@ -119,7 +119,7 @@ sub log_message {
 
 =head1 NAME
 
-Log::Dispatch::Slack
+Log::Dispatch::Slack - Dispatch log events to Slack.
 
 =head1 DESCRIPTION
 
