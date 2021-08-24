@@ -128,7 +128,7 @@ Send log messages to Slack
 =head1 SYNOPSIS
 
   log4perl.appender.hipchat=Log::Dispatch::Slack
-  log4perl.appender.hipchat.auth_token=your-auth-token
+  log4perl.appender.hipchat.token=your-auth-token
   log4perl.appender.hipchat.channel=channel-to-talk-to
   log4perl.appender.hipchat.die_on_error=1
 
